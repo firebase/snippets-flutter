@@ -21,7 +21,7 @@ import 'package:firestore_snippets/snippets/custom_snippets/firestore_add_data_c
 import 'package:firestore_snippets/snippets/custom_snippets/restaurant.dart';
 import 'package:firestore_snippets/snippets/snippet.dart';
 
-class FirestoreSnippets extends DocSnippet implements Firestore {
+class FirestoreSnippets extends DocSnippet {
   @override
   final FirebaseFirestore db;
 
