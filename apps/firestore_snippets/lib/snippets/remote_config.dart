@@ -39,4 +39,21 @@ class RemoteConfigSnippets extends DocSnippet {
     });
     // [END get_started_set_default_values]
   }
+
+  void getStarted_getDefaultValues() {
+    // [START get_started_get_default_values]
+    final val = firebaseRemoteConfig.getValue("welcome_messsage");
+    // [END get_started_get_default_values]
+  }
+
+  void getStarted_fetchAndActivateValues() {
+    // [START get_started_fetch_and_activate_values]
+    firebaseRemoteConfig.fetchAndActivate().then((bool success) {
+      if (success) {
+        final updatedConfig = firebaseRemoteConfig.getAll();
+        print("Config params updated: $updatedConfig");
+      }
+    });
+    // [END get_started_fetch_and_activate_values]
+  }
 }
