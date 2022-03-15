@@ -14,6 +14,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:firestore_snippets/snippets/cloud_messaging.dart';
 import 'package:firestore_snippets/snippets/firestore.dart';
 import 'package:firestore_snippets/snippets/remote_config.dart';
 import 'package:flutter/material.dart';
@@ -35,13 +36,17 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late final FirestoreSnippets _firestoreSnippets;
   late final RemoteConfigSnippets _remoteConfigSnippets;
+  late final CloudMessagingSnippets _cloudMessagingSnippets;
 
   @override
   void initState() {
     _firestoreSnippets = FirestoreSnippets(widget.firestore);
     _remoteConfigSnippets = RemoteConfigSnippets(widget.firebaseRemoteConfig);
+    _cloudMessagingSnippets = CloudMessagingSnippets();
 
     _firestoreSnippets.runAll();
+    _remoteConfigSnippets.runAll();
+    _cloudMessagingSnippets.runAll();
     super.initState();
   }
 

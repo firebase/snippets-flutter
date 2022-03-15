@@ -8,6 +8,8 @@
 .buildlog/
 .history
 .svn/
+ios/
+windows/
 
 # IntelliJ related
 *.iml
