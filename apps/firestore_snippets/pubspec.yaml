@@ -28,6 +28,7 @@ dependencies:
   firebase_remote_config: ^2.0.2
   firebase_crashlytics: ^2.5.3
   firebase_messaging: ^11.2.10
+  cloud_functions: ^3.2.10
 
 dev_dependencies:
   flutter_test:
