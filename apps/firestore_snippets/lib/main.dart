@@ -15,6 +15,7 @@
 // [START set_up_environment]
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 // [END set_up_environment]
 
 import 'package:firestore_snippets/app.dart';
@@ -61,9 +62,16 @@ void main() async {
   db.settings = settings;
   // [END access_data_offline_configure_offline_persistence]
 
+  // [START get_started_get_singleton_object]
+  FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
+  // [END get_started_get_singleton_object]
+
   if (!kReleaseMode) db.useFirestoreEmulator('localhost', 8080);
 
   runApp(
-    MyApp(firestore: db),
+    MyApp(
+      firestore: db,
+      firebaseRemoteConfig: firebaseRemoteConfig,
+    ),
   );
 }
