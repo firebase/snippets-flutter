@@ -4,15 +4,13 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
     paths:
-      - "packages/**"
-      - ".github/workflows"
-      paths-ignore:
-        - "**.md"
+    - "packages/**"
+    - ".github/workflows"
   push:
     branches:
-      - main
+    - main
     paths-ignore:
-      - "**.md"
+    - "**.md"
 
 jobs:
   android:
