@@ -23,12 +23,7 @@ class RemoteConfigSnippets extends DocSnippet {
   RemoteConfigSnippets(this.firebaseRemoteConfig);
 
   @override
-  void runAll() {
-    getStarted_setMinimumIntervalFetch();
-    getStarted_setDefaultValues();
-    getStarted_getDefaultValues();
-    getStarted_fetchAndActivateValues();
-  }
+  void runAll() {}
 
   void getStarted_setMinimumIntervalFetch() {
     // [START get_started_set_minimum_interval_fetch]
