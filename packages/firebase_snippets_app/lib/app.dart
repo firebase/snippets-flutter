@@ -14,8 +14,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:firestore_snippets/snippets/firestore.dart';
-import 'package:firestore_snippets/snippets/remote_config.dart';
+import 'package:firebase_snippets_app/snippets/firestore.dart';
+import 'package:firebase_snippets_app/snippets/remote_config.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatefulWidget {
@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
     _remoteConfigSnippets = RemoteConfigSnippets(widget.firebaseRemoteConfig);
 
     _firestoreSnippets.runAll();
+    _remoteConfigSnippets.runAll();
     super.initState();
   }
 

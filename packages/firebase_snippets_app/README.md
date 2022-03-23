@@ -1,4 +1,4 @@
-# firestore_snippets
+# firebase_snippets_app
 
 A new Flutter project.
 

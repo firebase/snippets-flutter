@@ -15,7 +15,7 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:firestore_snippets/snippets/snippet.dart';
+import 'package:firebase_snippets_app/snippets/snippet_base.dart';
 
 class RemoteConfigSnippets extends DocSnippet {
   final FirebaseRemoteConfig firebaseRemoteConfig;
@@ -23,7 +23,12 @@ class RemoteConfigSnippets extends DocSnippet {
   RemoteConfigSnippets(this.firebaseRemoteConfig);
 
   @override
-  void runAll() {}
+  void runAll() {
+    getStarted_setMinimumIntervalFetch();
+    getStarted_setDefaultValues();
+    getStarted_getDefaultValues();
+    getStarted_fetchAndActivateValues();
+  }
 
   void getStarted_setMinimumIntervalFetch() {
     // [START get_started_set_minimum_interval_fetch]
