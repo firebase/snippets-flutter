@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: firestore_snippets
+name: firebase_snippets_app
 description: A new Flutter project.
 
 publish_to: 'none'
@@ -29,6 +29,8 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
   flutter_lints: ^1.0.0
 

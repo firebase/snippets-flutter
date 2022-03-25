@@ -80,7 +80,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: 'TODO: use secrets or demo',
     projectId: 'TODO: use secrets or demo',
     storageBucket: 'TODO: use secrets or demo',
-    iosClientId:'TODO: use secrets or demo',
+    iosClientId: 'TODO: use secrets or demo',
     iosBundleId: 'com.fluttersnippets.app',
   );
 }

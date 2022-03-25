@@ -17,9 +17,9 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firestore_snippets/snippets/custom_snippets/firestore_add_data_custom_objects_snippet.dart';
-import 'package:firestore_snippets/snippets/custom_snippets/restaurant.dart';
-import 'package:firestore_snippets/snippets/snippet.dart';
+import 'package:firebase_snippets_app/model/firestore_add_data_custom_objects_snippet.dart';
+import 'package:firebase_snippets_app/model/restaurant.dart';
+import 'package:firebase_snippets_app/snippets/snippet_base.dart';
 
 class FirestoreSnippets extends DocSnippet {
   @override
