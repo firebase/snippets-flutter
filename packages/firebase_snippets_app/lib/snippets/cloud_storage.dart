@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_print
 
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_snippets_app/snippets/snippet_base.dart';
@@ -11,6 +12,9 @@ class CloudStorageSnippets implements DocSnippet {
   @override
   void runAll() {
     uploadFiles_fullExample();
+    downloadFiles_fullExample();
+    listFiles_listAllFiles();
+    deleteFiles_deleteAFile();
   }
 
   void getStarted_setUpCloudStorage() {
@@ -227,7 +231,209 @@ class CloudStorageSnippets implements DocSnippet {
 
   void downloadFiles_createAReference() {
     // [START download_files_create_a_reference]
-
+    // Create a storage reference from our app
+    final storageRef = FirebaseStorage.instance.ref();
+    // Create a reference with an initial file path and name
+    final pathReference = storageRef.child("images/stars.jpg");
+    // Create a reference to a file from a Google Cloud Storage URI
+    final gsReference = FirebaseStorage.instance
+        .refFromURL("gs://YOUR_BUCKET/images/stars.jpg");
+    // Create a reference from an HTTPS URL
+    // Note that in the URL, characters are URL escaped!
+    final httpsReference = FirebaseStorage.instance.refFromURL(
+        "https://firebasestorage.googleapis.com/b/YOUR_BUCKET/o/images%20stars.jpg");
     // [END download_files_create_a_reference]
+  }
+
+  void downloadFiles_downloadInMemory() async {
+    final storageRef = FirebaseStorage.instance.ref();
+    // [START download_files_download_in_memory]
+    final islandRef = storageRef.child("images/island.jpg");
+    try {
+      const oneMegabyte = 1024 * 1024;
+      final Uint8List? data = await islandRef.getData(oneMegabyte);
+      // Data for "images/island.jpg" is returned, use this as needed.
+    } on FirebaseException catch (e) {
+      // Handle any errors.
+    }
+    // [END download_files_download_in_memory]
+  }
+
+  void downloadFiles_downloadToALocalFile() async {
+    final storageRef = FirebaseStorage.instance.ref();
+    // [START download_files_download_to_a_local_file]
+    final islandRef = storageRef.child("images/island.jpg");
+    final appDocDir = await getApplicationDocumentsDirectory();
+    final filePath = "${appDocDir.absolute}/images/island.jpg";
+    final file = File(filePath);
+    final downloadTask = islandRef.writeToFile(file);
+    downloadTask.snapshotEvents.listen((taskSnapshot) {
+      switch (taskSnapshot.state) {
+        case TaskState.running:
+          // TODO: Handle this case.
+          break;
+        case TaskState.paused:
+          // TODO: Handle this case.
+          break;
+        case TaskState.success:
+          // TODO: Handle this case.
+          break;
+        case TaskState.canceled:
+          // TODO: Handle this case.
+          break;
+        case TaskState.error:
+          // TODO: Handle this case.
+          break;
+      }
+    });
+    // [END download_files_download_to_a_local_file]
+  }
+
+  void downloadFiles_downloadViaUrl() async {
+    final storageRef = FirebaseStorage.instance.ref();
+    // [START download_files_download_via_url]
+    final imageUrl =
+        await storageRef.child("users/me/profile.png").getDownloadURL();
+    // [END download_files_download_via_url]
+  }
+
+  void downloadFiles_fullExample() async {
+    final storageRef = FirebaseStorage.instance.ref();
+    // [START download_files_full_example]
+    final islandRef = storageRef.child("images/island.jpg");
+    final appDocDir = await getApplicationDocumentsDirectory();
+    final filePath = "${appDocDir.absolute}/images/island.jpg";
+    final file = File(filePath);
+    final downloadTask = islandRef.writeToFile(file);
+    downloadTask.snapshotEvents.listen((taskSnapshot) {
+      switch (taskSnapshot.state) {
+        case TaskState.running:
+          // TODO: Handle this case.
+          break;
+        case TaskState.paused:
+          // TODO: Handle this case.
+          break;
+        case TaskState.success:
+          // TODO: Handle this case.
+          break;
+        case TaskState.canceled:
+          // TODO: Handle this case.
+          break;
+        case TaskState.error:
+          // TODO: Handle this case.
+          break;
+      }
+    });
+    // [END download_files_full_example]
+  }
+
+  void useFileMetadata_getMetadata() async {
+    // [START use_file_metadata_get_metadata]
+    final storageRef = FirebaseStorage.instance.ref();
+    // Create reference to the file whose metadata we want to retrieve
+    final forestRef = storageRef.child("images/forest.jpg");
+    // Get metadata properties
+    final metadata = await forestRef.getMetadata();
+    // Metadata now contains the metadata for 'images/forest.jpg'
+    // [END use_file_metadata_get_metadata]
+  }
+
+  void useFileMetadata_updateMetadata() async {
+    final storageRef = FirebaseStorage.instance.ref();
+    // [START use_file_metadata_update_metadata]
+    // Create reference to the file whose metadata we want to change
+    final forestRef = storageRef.child("images/forest.jpg");
+    // Create file metadata to update
+    final newMetadata = SettableMetadata(
+      cacheControl: "public,max-age=300",
+      contentType: "image/jpeg",
+    );
+    // Update metadata properties
+    final metadata = await forestRef.updateMetadata(newMetadata);
+    // Updated metadata for 'images/forest.jpg' is returned
+    // [END use_file_metadata_update_metadata]
+  }
+
+  void useFileMetadata_deleteMetadata() async {
+    final storageRef = FirebaseStorage.instance.ref();
+    final forestRef = storageRef.child("images/forest.jpg");
+    // [START use_file_metadata_delete_metadata]
+    // Delete the cacheControl property
+    final newMetadata = SettableMetadata(cacheControl: null);
+    final metadata = await forestRef.updateMetadata(newMetadata);
+    // [END use_file_metadata_delete_metadata]
+  }
+
+  void useFileMetadata_customMetadata() async {
+    final storageRef = FirebaseStorage.instance.ref();
+    // [START use_file_metadata_custom_metadata]
+    // Create reference to the file whose metadata we want to change
+    final forestRef = storageRef.child("images/forest.jpg");
+    // Create file metadata to update
+    final newCustomMetadata = SettableMetadata(
+      customMetadata: {
+        "location": "Yosemite, CA, USA",
+        "activity": "Hiking",
+      },
+    );
+    // Update metadata properties
+    final metadata = await forestRef.updateMetadata(newCustomMetadata);
+    // Updated metadata for 'images/forest.jpg' is returned
+    // [END use_file_metadata_custom_metadata]
+  }
+
+  void deleteFiles_deleteAFile() async {
+    final storageRef = FirebaseStorage.instance.ref();
+    // [START delete_files_delete_a_file]
+    // Create a reference to the file to delete
+    final desertRef = storageRef.child("images/desert.jpg");
+    // Delete the file
+    await desertRef.delete();
+    // [END delete_files_delete_a_file]
+  }
+
+  void listFiles_listAllFiles() async {
+    // [START list_files_list_all_files]
+    final storageRef = FirebaseStorage.instance.ref().child("files/uid");
+    final listResult = await storageRef.listAll();
+    for (var prefix in listResult.prefixes) {
+      // The prefixes under storageRef.
+      // You can call listAll() recursively on them.
+    }
+    for (var item in listResult.items) {
+      // The items under storageRef.
+    }
+    // [END list_files_list_all_files]
+  }
+
+  void listFiles_PaginateList() async {
+    final storageRef = FirebaseStorage.instance.ref().child("files/uid");
+    // [START list_files_paginate_list]
+    Stream<ListResult> listAllPaginated(Reference storageRef) async* {
+      String? pageToken;
+      do {
+        final listResult = await storageRef.list(ListOptions(
+          maxResults: 100,
+          pageToken: pageToken,
+        ));
+        yield listResult;
+        pageToken = listResult.nextPageToken;
+      } while (pageToken != null);
+    }
+    // [END list_files_paginate_list]
+
+    listAllPaginated(storageRef);
+  }
+
+  void handleErrors_handleErrors() async {
+    // [START handle_errors_handle_errors]
+    final storageRef = FirebaseStorage.instance.ref().child("files/uid");
+    try {
+      final listResult = await storageRef.listAll();
+    } on FirebaseException catch (e) {
+      // Caught an exception from Firebase.
+      print("Failed with error '${e.code}': ${e.message}");
+    }
+    // [END handle_errors_handle_errors]
   }
 }
