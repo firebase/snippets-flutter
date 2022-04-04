@@ -30,6 +30,8 @@ dependencies:
   firebase_storage: ^10.2.9
   firebase_messaging: ^11.2.11
   path_provider: ^2.0.9
+  firebase_database: ^9.0.9
+  firebase_auth: ^3.3.12
 
 dev_dependencies:
   flutter_test:
