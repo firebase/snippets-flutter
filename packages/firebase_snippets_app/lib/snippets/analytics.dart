@@ -20,7 +20,13 @@ import 'package:firebase_snippets_app/snippets/snippet_base.dart';
 class AnalyticsSnippets extends DocSnippet {
   @override
   void runAll() {
-    // TODO: implement runAll
+    analytics_startLoggingEvents();
+    analytics_predefinedEvents();
+    analytics_setUserProperties();
+    analytics_trackScreens();
+    setUserId_setUserId();
+    measureECommerce_implementation();
+    measureAdRevenue_moPub();
   }
 
   void analytics_startLoggingEvents() async {
