@@ -30,6 +30,8 @@ dependencies:
   firebase_storage: ^10.2.9
   firebase_messaging: ^11.2.11
   path_provider: ^2.0.9
+  cloud_firestore_odm: ^1.0.0-dev.11
+  json_annotation: ^4.4.0
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +39,9 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  build_runner: ^2.1.8
+  cloud_firestore_odm_generator: ^1.0.0-dev.11
+  json_serializable: ^6.1.5
 
 flutter:
   uses-material-design: true
