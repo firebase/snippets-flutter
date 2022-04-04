@@ -13,7 +13,20 @@ import 'package:twitter_login/twitter_login.dart';
 
 class AuthenticationSnippets implements DocSnippet {
   @override
-  void runAll() {}
+  void runAll() {
+    getStarted_authStateChanges();
+    getStarted_idTokenChanges();
+    getStarted_userChanges();
+    manageUsers_getProfile();
+    passwordAuth_createPasswordBasedAccount();
+    emailLinkAuth_sendAuthLinkEmail();
+    social_google_sign_in();
+    social_twitterAuth();
+    social_facebookAuth();
+    phoneAuth_verifyPhoneNumber();
+    customAuth_withFirebase();
+    anonymousAuth_withFirebase();
+  }
 
   void getStarted_authStateChanges() async {
     // [START get_started_auth_state_changes]
