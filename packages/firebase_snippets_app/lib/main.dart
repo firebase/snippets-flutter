@@ -62,9 +62,11 @@ void main() async {
   FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
   // [END get_started_get_singleton_object]
 
-  // [START auth_persistingAuthState]
-  await FirebaseAuth.instance.setPersistence(Persistence.NONE);
-  // [END auth_persistingAuthState]
+  if (kIsWeb) {
+    // [START auth_persistingAuthState]
+    await FirebaseAuth.instance.setPersistence(Persistence.NONE);
+    // [END auth_persistingAuthState]
+  }
 
   if (!kReleaseMode) db.useFirestoreEmulator('localhost', 8080);
 
