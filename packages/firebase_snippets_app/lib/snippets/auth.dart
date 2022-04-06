@@ -32,21 +32,40 @@ class AuthenticationSnippets implements DocSnippet {
     // [START get_started_auth_state_changes]
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
-        print('User is currently signed out!');
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        final uid = user!.uid;
       } else {
-        print('User is signed in!');
+        // User is signed out
+        // ...
       }
     });
     // [END get_started_auth_state_changes]
+  }
+
+  void getStarted_authGetCurrentUser() async {
+    // [START get_started_auth_get_current_user]
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      final uid = user!.uid;
+    } else {
+      // User is signed out
+      // ...
+    }
+    // [END get_started_auth_get_current_user]
   }
 
   void getStarted_idTokenChanges() async {
     // [START get_started_id_token_changes]
     FirebaseAuth.instance.idTokenChanges().listen((User? user) {
       if (user == null) {
-        print('User is currently signed out!');
+        // User is signed in, see docs for a list of available properties
+        // ...
       } else {
-        print('User is signed in!');
+        // User is signed out
+        // ...
       }
     });
     // [END get_started_id_token_changes]
@@ -82,8 +101,11 @@ class AuthenticationSnippets implements DocSnippet {
       final uid = user.uid;
     }
     // [END manage_users_get_profile]
+  }
 
+  void manageUsers_getProviderSpecificProfile() async {
     // [START manage_users_get_provider_specific_profile]
+    final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       for (final providerProfile in user.providerData) {
         // ID of the provider (google.com, apple.cpm, etc.)
@@ -99,51 +121,137 @@ class AuthenticationSnippets implements DocSnippet {
       }
     }
     // [END manage_users_get_provider_specific_profile]
+  }
 
+  void manageUsers_updateProfile() async {
     // [START manage_users_update_profile]
-    await user?.updateDisplayName("Jane Q. User");
-    await user?.updatePhotoURL("https://example.com/jane-q-user/profile.jpg");
+    final user = FirebaseAuth.instance.currentUser;
+    try {
+      await user?.updateDisplayName("Jane Q. User");
+      await user?.updatePhotoURL("https://example.com/jane-q-user/profile.jpg");
+    } on FirebaseAuthException catch (e) {
+      // An error occurred
+      // ..
+    }
     // [END manage_users_update_profile]
+  }
 
+  void manageUsers_setEmail() async {
     // [START manage_users_set_email]
-    await user?.updateEmail("janeq@example.com");
+    final user = FirebaseAuth.instance.currentUser;
+    await user?.updateEmail("janeq@example.com").then((result) {
+      // Email updated!
+      // ...
+    }, onError: (error) {
+      // An error occurred
+      // ..
+    });
     // [END manage_users_set_email]
+  }
 
+  void manageUsers_sendVerificationEmail() async {
     // [START manage_users_send_verification_email]
-    await user?.sendEmailVerification();
+    final user = FirebaseAuth.instance.currentUser;
+    await user?.sendEmailVerification().then((result) {
+      // Email sent!
+      // ...
+    }, onError: (error) {
+      // An error occurred
+      // ..
+    });
+
     // [END manage_users_send_verification_email]
+  }
 
-    // [START manage_users_set_localization_then_send_email]
+  void manageUsers_setLocaleThenSendEmail() async {
+    // [START manage_users_set_locale_then_send_email]
+    final user = FirebaseAuth.instance.currentUser;
     await FirebaseAuth.instance.setLanguageCode("fr");
-    await user?.sendEmailVerification();
-    // [END manage_users_set_localization_then_send_email]
+    await user?.sendEmailVerification().then((result) {
+      // Email sent!
+      // ...
+    }, onError: (error) {
+      // An error occurred
+      // ..
+    });
 
-    const String newPassword = 'goodpassword';
+    // [END manage_users_set_locale_then_send_email]
+  }
 
+  void manageUsers_setNewPassword() async {
     // [START manage_users_set_new_password]
-    await user?.updatePassword(newPassword);
-    // [END manage_users_set_new_password]
+    final user = FirebaseAuth.instance.currentUser;
+    await user?.updatePassword('top.secret%PASSWORD').then((result) {
+      // Password updated!
+      // ...
+    }, onError: (error) {
+      // An error occurred
+      // ..
+    });
 
+    // [END manage_users_set_new_password]
+  }
+
+  void manageUsers_sendResetEmail() async {
     // [START manage_users_send_reset_email]
     await FirebaseAuth.instance
-        .sendPasswordResetEmail(email: 'user@example.com');
+        .sendPasswordResetEmail(email: 'user@example.com')
+        .then((result) {
+      // Email sent!
+      // ...
+    }, onError: (error) {
+      // An error occurred
+      // ..
+    });
+
     // [END manage_users_send_reset_email]
+  }
 
+  void manageUsers_setLanguageCode() async {
     // [START manage_users_set_language_code]
-    await FirebaseAuth.instance.setLanguageCode("fr");
+    // All emails, SMS, and reCAPTCHA sent after this line is executed will have this language code.
+    await FirebaseAuth.instance.setLanguageCode("fr").then((result) {
+      // Language code updated!
+      // ...
+    }, onError: (error) {
+      // An error occurred
+      // ..
+    });
     // [END manage_users_set_language_code]
+  }
 
-    final userCredential = await FirebaseAuth.instance.signInAnonymously();
-    final credential = userCredential.credential!;
+  void manageUsers_reAuthenticate() async {
+    // [START manage_users_re_authenticate]
+    try {
+      final userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: 'user@example.com',
+        password: 'top.secret.PASSWORD',
+      );
+      final credential = userCredential.credential!;
 
-    // [START manage_users_re_auth]
-    // Prompt the user to re-provide their sign-in credentials.
-    // Then, use the credentials to reauthenticate:
-    await user?.reauthenticateWithCredential(credential);
-    // [END manage_users_re_auth]
+      // Prompt the user to re-provide their sign-in credentials.
+      // Then, use the credentials to reauthenticate:
+      await FirebaseAuth.instance.currentUser!
+          .reauthenticateWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      // an error occurred
+      // ...
+    }
+    // [END manage_users_re_authenticate]
+  }
 
+  void manageUsers_deleteUser() async {
     // [START manage_users_delete_user]
-    await user?.delete();
+    final user = FirebaseAuth.instance.currentUser;
+    await user?.delete().then((result) {
+      // User deleted!
+      // ...
+    }, onError: (error) {
+      // An error occurred
+      // ..
+    });
+    ;
     // [END manage_users_delete_user]
   }
 
@@ -212,13 +320,14 @@ class AuthenticationSnippets implements DocSnippet {
     var emailAuth = 'someemail@domain.com';
     FirebaseAuth.instance
         .sendSignInLinkToEmail(email: emailAuth, actionCodeSettings: acs)
-        .catchError(
-            (onError) => print('Error sending email verification $onError'))
+        .catchError((error) => print('Error sending email verification $error'))
         .then((value) => print('Successfully sent email verification'));
     // [END email_link_auth_send_auth_link_email]
 
     await FirebaseAuth.instance.signOut();
   }
+
+  // TODO: ewindmill@ : I'm missing a couple snippets for 'email link' that also require DynamicLinks
 
   void social_google_sign_in() async {
     // [START social_google_sign_in]
