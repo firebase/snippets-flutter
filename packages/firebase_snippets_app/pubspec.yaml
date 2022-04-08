@@ -29,9 +29,16 @@ dependencies:
   firebase_remote_config: ^2.0.2
   firebase_storage: ^10.2.9
   firebase_messaging: ^11.2.11
-  path_provider: ^2.0.9
   firebase_dynamic_links: ^4.1.2
   firebase_ml_model_downloader: ^0.1.0+9
+  firebase_auth: ^3.3.12
+  path_provider: ^2.0.9
+  google_sign_in: ^5.2.4
+  flutter_facebook_auth: ^4.1.2
+  github_sign_in: ^0.0.4
+  twitter_login: ^4.1.0
+  sign_in_with_apple: ^3.3.0
+  crypto: ^3.0.1
 
 dev_dependencies:
   flutter_test:
