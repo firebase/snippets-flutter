@@ -16,6 +16,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 // [END set_up_environment]
 
@@ -48,6 +49,7 @@ void main() async {
   );
 
   final db = FirebaseFirestore.instance;
+
   // [START access_data_offline_configure_offline_persistence]
   final settings = db.settings.copyWith(persistenceEnabled: true);
   // [END access_data_offline_configure_offline_persistence]
@@ -62,6 +64,11 @@ void main() async {
   FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
   // [END get_started_get_singleton_object]
 
+  // [START dynamic_links_get_initial_links]
+  final PendingDynamicLinkData? initialLink =
+      await FirebaseDynamicLinks.instance.getInitialLink();
+  // [END dynamic_links_get_initial_links]
+
   if (kIsWeb) {
     // [START auth_persistingAuthState]
     await FirebaseAuth.instance.setPersistence(Persistence.NONE);
@@ -74,6 +81,7 @@ void main() async {
     MyApp(
       firestore: db,
       firebaseRemoteConfig: firebaseRemoteConfig,
+      initialLink: null,
     ),
   );
 }
