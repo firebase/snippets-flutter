@@ -25,25 +25,6 @@ import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  // TODO: special-case -- be sure to document
-// [START get_firestore_instance]
-
-  /// In the Firebase documentation, the code should look like the following example
-  /// In this snippets app, we're using the FlutterFire CLI to generate FirebaseOptions
-  ///```dart
-  /// WidgetsFlutterBinding.ensureInitialized();
-  /// await Firebase.initializeApp(
-  ///   options: const FirebaseOptions(
-  ///     apiKey: '### FIREBASE API KEY ###',
-  ///     authDomain: '### FIREBASE AUTH DOMAIN ###',
-  ///     projectId: '### CLOUD FIRESTORE PROJECT ID ###'
-  ///   )
-  /// );
-  /// final firestore = FirebaseFirestore.instance;
-  /// ```
-
-// [END get_firestore_instance]
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

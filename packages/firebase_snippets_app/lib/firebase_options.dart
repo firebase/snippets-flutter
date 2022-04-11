@@ -18,13 +18,6 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-/*
-NB: This contains errors!
-
-TODO: ewindmill -- set up env variables and add options back in.
-
- */
-
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -58,29 +51,31 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'TODO: use secrets or demo',
-    appId: 'TODO: use secrets or demo',
-    messagingSenderId: 'TODO: use secrets or demo',
-    projectId: 'TODO: use secrets or demo',
-    authDomain: 'TODO: use secrets or demo',
-    storageBucket: 'TODO: use secrets or demo',
+    apiKey: 'AIzaSyDu2FRBnv0pV01dHHOQuk26pR1oYcZpGTE',
+    appId: '1:220375889386:web:bc468dd9e586597b6bae93',
+    messagingSenderId: '220375889386',
+    projectId: 'flutter-fire-snippets',
+    authDomain: 'flutter-fire-snippets.firebaseapp.com',
+    storageBucket: 'flutter-fire-snippets.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'TODO: use secrets or demo',
-    appId: 'TODO: use secrets or demo',
-    messagingSenderId: 'TODO: use secrets or demo',
-    projectId: 'TODO: use secrets or demo',
-    storageBucket: 'TODO: use secrets or demo',
+    apiKey: 'AIzaSyC2bbpFcMWgGpKKEmqNw57Al2vdV4QnNP0',
+    appId: '1:220375889386:android:1a16e85eeab0d5896bae93',
+    messagingSenderId: '220375889386',
+    projectId: 'flutter-fire-snippets',
+    storageBucket: 'flutter-fire-snippets.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'TODO: use secrets or demo',
-    appId: 'TODO: use secrets or demo',
-    messagingSenderId: 'TODO: use secrets or demo',
-    projectId: 'TODO: use secrets or demo',
-    storageBucket: 'TODO: use secrets or demo',
-    iosClientId: 'TODO: use secrets or demo',
+    apiKey: 'AIzaSyDNp5_kQjIgyS_UMtv9oRKcbCjOfYB1LNc',
+    appId: '1:220375889386:ios:0fec9df2e96f0db36bae93',
+    messagingSenderId: '220375889386',
+    projectId: 'flutter-fire-snippets',
+    storageBucket: 'flutter-fire-snippets.appspot.com',
+    iosClientId:
+    '220375889386-8v73sv2lia3e7c12h0btp2tfbj0um4it.apps.googleusercontent.com',
     iosBundleId: 'com.fluttersnippets.app',
   );
+
 }
