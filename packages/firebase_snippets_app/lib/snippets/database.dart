@@ -30,95 +30,112 @@ class RealtimeDatabaseSnippets implements DocSnippet {
 
   void readAndWrite_grabAReference() async {
     // [START read_and_write_grab_a_reference]
-    DatabaseReference ref = FirebaseDatabase.instance.ref();
+    final DatabaseReference ref = FirebaseDatabase.instance.ref();
     // [END read_and_write_grab_a_reference]
+  }
 
-    // [START read_and_write_basic_write_operations]
+  void readAndWrite_basicWriteOperation() async {
+    // [START read_and_write_basic_write_operation]
+    final DatabaseReference ref = FirebaseDatabase.instance.ref();
     await ref.set({
       "name": "John",
       "age": 18,
       "address": {"line1": "100 Mountain View"}
     });
-    // [END read_and_write_basic_write_operations]
+    // [END read_and_write_basic_write_operation]
+  }
 
+  void readAndWrite_updateRef() async {
     // [START read_and_write_update_ref]
+    final DatabaseReference ref = FirebaseDatabase.instance.ref();
     await ref.update({
       "age": 19,
     });
     // [END read_and_write_update_ref]
+  }
 
+  void readAndWrite_updateSubPaths() async {
     // [START read_and_write_update_sub_paths]
+    final DatabaseReference ref = FirebaseDatabase.instance.ref();
     await ref.update({
       "123/age": 19,
       "123/address/line1": "1 Mountain View",
     });
     // [END read_and_write_update_sub_paths]
+  }
+
+  void readAndWrite_readDataByListening() async {
+    // [START read_and_write_read_data_by_listening]
+    final DatabaseReference ref = FirebaseDatabase.instance.ref();
 
     const postId = '123';
-    void updateStarCount(Object? data) {}
-
-    // [START read_and_write_read_data_by_listening]
     DatabaseReference starCountRef =
         FirebaseDatabase.instance.ref('posts/$postId/starCount');
     starCountRef.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value;
-      updateStarCount(data);
+      // ... work with data
     });
     // [END read_and_write_read_data_by_listening]
+  }
 
-    const userId = '123';
-
+  void readAndWrite_readDataOnce() async {
     // [START read_and_write_read_data_once]
+    final DatabaseReference ref = FirebaseDatabase.instance.ref();
+    const userId = '123';
     final dbRef = FirebaseDatabase.instance.ref();
-    final snapshot = await dbRef.child('users/$userId').get();
-    if (snapshot.exists) {
-      print(snapshot.value);
-    } else {
-      print('No data available.');
+
+    try {
+      final snapshot = await dbRef.child('users/$userId').get();
+      if (snapshot.exists) {
+        // ...
+      }
+    } on FirebaseException catch (e) {
+      // ...
     }
     // [END read_and_write_read_data_once]
+  }
 
+  void readAndWrite_updateSpecificFields() async {
     // [START read_and_write_update_specific_fields]
-    void writeNewPost(String uid, String username, String picture, String title,
-        String body) async {
-      // A post entry.
-      final postData = {
-        'author': username,
-        'uid': uid,
-        'body': body,
-        'title': title,
-        'starCount': 0,
-        'authorPic': picture,
-      };
+    // A post entry.
+    final postData = {
+      'author': 'example user',
+      'uid': '123',
+      'body': 'A wonderful post',
+      'title': 'Example Post',
+      'starCount': 0,
+    };
 
-      // Get a key for a new Post.
-      final newPostKey =
-          FirebaseDatabase.instance.ref().child('posts').push().key;
+    // Get a key for a new Post.
+    final newPostKey =
+        FirebaseDatabase.instance.ref().child('posts').push().key;
 
-      // Write the new post's data simultaneously in the posts list and the
-      // user's post list.
-      final Map<String, Map> updates = {};
-      updates['/posts/$newPostKey'] = postData;
-      updates['/user-posts/$uid/$newPostKey'] = postData;
+    // Write the new post's data simultaneously in the posts list and the
+    // user's post list.
+    final Map<String, Map> updates = {};
+    updates['/posts/$newPostKey'] = postData;
+    updates['/user-posts/${postData['uid']}/$newPostKey'] = postData;
 
-      return await FirebaseDatabase.instance.ref().update(updates);
-    }
+    return await FirebaseDatabase.instance.ref().update(updates);
+
     // [END read_and_write_update_specific_fields]
+  }
 
-    const emailAddress = 'user@example.com';
-
+  void readAndWrite_addCompletionCallback() async {
     // [START read_and_write_add_completion_callback]
     FirebaseDatabase.instance
-        .ref('users/$userId/email')
-        .set(emailAddress)
+        .ref('users/123/email')
+        .set('user@example.com')
         .then((_) {
       // Data saved successfully!
     }).catchError((error) {
       // The write failed...
     });
     // [END read_and_write_add_completion_callback]
+  }
 
-    // [START read_and_write_run_transaction]
+  void readAndWrite_runATransaction() async {
+    // [START read_and_write_run_a_transaction]
     void toggleStar(String uid) async {
       DatabaseReference postRef =
           FirebaseDatabase.instance.ref("posts/foo-bar-123");
@@ -145,27 +162,59 @@ class RealtimeDatabaseSnippets implements DocSnippet {
         return Transaction.success(_post);
       });
       // ...
-      // [END read_and_write_run_transaction]
+    }
+    // [END read_and_write_run_a_transaction]
+  }
 
-      // [START read_and_write_transaction_result]
+  void readAndWrite_transactionResult() async {
+    // [START read_and_write_transaction_result]
+    void toggleStar(String uid) async {
+      DatabaseReference postRef =
+          FirebaseDatabase.instance.ref("posts/foo-bar-123");
+      TransactionResult result = await postRef.runTransaction((Object? post) {
+        // Ensure a post at the ref exists.
+        if (post == null) {
+          return Transaction.abort();
+        }
+
+        Map<String, dynamic> _post = Map<String, dynamic>.from(post as Map);
+        if (_post["stars"] is Map && _post["stars"][uid] != null) {
+          _post["starCount"] = (_post["starCount"] ?? 1) - 1;
+          _post["stars"][uid] = null;
+        } else {
+          _post["starCount"] = (_post["starCount"] ?? 0) + 1;
+          if (!_post.containsKey("stars")) {
+            _post["stars"] = {};
+          }
+          _post["stars"][uid] = true;
+        }
+
+        // Return the new data.
+        return Transaction.success(_post);
+      });
+
       print('Committed? ${result.committed}'); // true / false
       print('Snapshot? ${result.snapshot}'); // DataSnapshot
       // [END read_and_write_transaction_result]
     }
+  }
 
+  void readAndWrite_cancelTransaction() async {
     // [START read_and_write_cancel_transaction]
+    final DatabaseReference ref = FirebaseDatabase.instance.ref();
     TransactionResult result = await ref.runTransaction((Object? user) {
       if (user != null) {
         return Transaction.abort();
       }
-
       // ...
       return Transaction.success('success!');
     });
 
     print(result.committed); // false
     // [END read_and_write_cancel_transaction]
+  }
 
+  void readAndWrite_atomicServersideIncrements() async {
     // [START read_and_write_atomic_serverside_increments]
     void addStar(uid, key) async {
       Map<String, Object?> updates = {};
