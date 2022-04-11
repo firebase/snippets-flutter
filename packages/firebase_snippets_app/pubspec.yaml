@@ -34,6 +34,7 @@ dependencies:
   firebase_ml_model_downloader: ^0.1.0+9
   firebase_auth: ^3.3.12
   path_provider: ^2.0.9
+  firebase_performance: ^0.8.0+8
   json_annotation: ^4.4.0
   google_sign_in: ^5.2.4
   flutter_facebook_auth: ^4.1.2
