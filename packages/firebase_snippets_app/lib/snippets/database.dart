@@ -233,13 +233,15 @@ class RealtimeDatabaseSnippets implements DocSnippet {
     DatabaseReference newPostRef = postListRef.push();
     newPostRef.set({
       // ...
+    }).catchError((e) {
+      // ...
     });
     // [END lists_of_data_append_to_a_list]
+  }
 
-    const postId = '123';
-
+  void listsOfData_listenForChildEvents() async {
     // [START lists_of_data_listen_for_child_events]
-    final commentsRef = FirebaseDatabase.instance.ref("post-comments/$postId");
+    final commentsRef = FirebaseDatabase.instance.ref("post-comments/123");
     commentsRef.onChildAdded.listen((event) {
       // A new comment has been added, so add it to the displayed list.
     });
@@ -252,8 +254,11 @@ class RealtimeDatabaseSnippets implements DocSnippet {
       // this comment and if so remove it.
     });
     // [END lists_of_data_listen_for_child_events]
+  }
 
+  void listsOfData_listenForValueEvents() async {
     // [START lists_of_data_listen_for_value_events]
+    DatabaseReference postListRef = FirebaseDatabase.instance.ref("posts");
     postListRef.onValue.listen((event) {
       for (final child in event.snapshot.children) {
         // Handle the post.
@@ -262,7 +267,9 @@ class RealtimeDatabaseSnippets implements DocSnippet {
       // Error.
     });
     // [END lists_of_data_listen_for_value_events]
+  }
 
+  void listsOfData_sorting() async {
     // [START lists_of_data_sorting]
     final myUserId = FirebaseAuth.instance.currentUser?.uid;
     final topUserPostsRef = FirebaseDatabase.instance
@@ -270,61 +277,84 @@ class RealtimeDatabaseSnippets implements DocSnippet {
         .orderByChild("starCount")
         .ref;
     // [END lists_of_data_sorting]
+  }
 
+  void listsOfData_orderByChild() async {
     // [START lists_of_data_order_by_child]
     final mostViewedPosts =
         FirebaseDatabase.instance.ref('posts').orderByChild('metrics/views');
     // [END lists_of_data_order_by_child]
+  }
 
+  void listsOfData_limitToLatest() async {
     // [START lists_of_data_limit_to_latest]
     final recentPostsRef =
         FirebaseDatabase.instance.ref('posts').limitToLast(100);
     // [END lists_of_data_limit_to_latest]
   }
 
-  void offline_keepSynced() async {
+  void offline_setDiskPersistence() async {
     // [START offline_set_disk_persistence]
     FirebaseDatabase.instance.setPersistenceEnabled(true);
     // [END offline_set_disk_persistence]
+  }
 
+  void offline_keepSynced() async {
     // [START offline_keep_synced]
     final scoresRef = FirebaseDatabase.instance.ref("scores");
     scoresRef.keepSynced(true);
     // [END offline_keep_synced]
+  }
 
+  void offline_keepSyncedFalse() async {
     // [START offline_keep_synced_false]
+    final scoresRef = FirebaseDatabase.instance.ref("scores");
     scoresRef.keepSynced(false);
     // [END offline_keep_synced_false]
+  }
 
+  void offline_queryDataOffline() async {
     // [START offline_query_data_offline]
+    final scoresRef = FirebaseDatabase.instance.ref("scores");
     scoresRef.orderByValue().limitToLast(4).onChildAdded.listen((event) {
       debugPrint(
           "The ${event.snapshot.key} dinosaur's score is ${event.snapshot.value}.");
     });
     // [END offline_query_data_offline]
+  }
 
+  void offline_queryDataOffline2() async {
     // [START offline_query_data_offline_2]
+    final scoresRef = FirebaseDatabase.instance.ref("scores");
     scoresRef.orderByValue().limitToLast(2).onChildAdded.listen((event) {
       debugPrint(
           "The ${event.snapshot.key} dinosaur's score is ${event.snapshot.value}.");
     });
     // [END offline_query_data_offline_2]
+  }
 
+  void offline_onDisconnect() async {
     // [START offline_on_disconnect]
     final presenceRef = FirebaseDatabase.instance.ref('disconnectmessage');
     // Write a string when this client loses connection
     presenceRef.onDisconnect().set('I disconnected!');
     // [END offline_on_disconnect]
+  }
 
+  void offline_howOnDisconnectWorks() async {
     // [START offline_how_on_disconnect_works]
+    final presenceRef = FirebaseDatabase.instance.ref('disconnectmessage');
     try {
       await presenceRef.onDisconnect().remove();
     } catch (error) {
       debugPrint("Could not establish onDisconnect event: $error");
     }
     // [END offline_how_on_disconnect_works]
+  }
 
+  void offline_onDisconnectCancel() async {
     // [START offline_on_disconnect_cancel]
+    final presenceRef = FirebaseDatabase.instance.ref('disconnectmessage');
     final onDisconnectRef = presenceRef.onDisconnect();
     onDisconnectRef.set("I disconnected");
     // ...
@@ -332,7 +362,9 @@ class RealtimeDatabaseSnippets implements DocSnippet {
     // ...
     onDisconnectRef.cancel();
     // [END offline_on_disconnect_cancel]
+  }
 
+  void offline_detectingConnectionState() async {
     // [START offline_detecting_connection_state]
     final connectedRef = FirebaseDatabase.instance.ref(".info/connected");
     connectedRef.onValue.listen((event) {
@@ -344,13 +376,17 @@ class RealtimeDatabaseSnippets implements DocSnippet {
       }
     });
     // [END offline_detecting_connection_state]
+  }
 
+  void offline_serverTimestamps() async {
     // [START offline_server_timestamps]
     final userLastOnlineRef =
         FirebaseDatabase.instance.ref("users/joe/lastOnline");
     userLastOnlineRef.onDisconnect().set(ServerValue.timestamp);
     // [END offline_server_timestamps]
+  }
 
+  void offline_clockSkew() async {
     // [START offline_clock_skew]
     final offsetRef = FirebaseDatabase.instance.ref(".info/serverTimeOffset");
     offsetRef.onValue.listen((event) {
