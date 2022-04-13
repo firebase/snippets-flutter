@@ -15,7 +15,7 @@ if ! [ -x "$(command -v npm)" ]; then
 fi
 
 export STORAGE_EMULATOR_DEBUG=true
-EMU_START_COMMAND="firebase emulators:start --only firestore --project flutter-fire-snippets"
+EMU_START_COMMAND="firebase emulators:start --project flutter-fire-snippets"
 
 MAX_RETRIES=3
 MAX_CHECKATTEMPTS=60
