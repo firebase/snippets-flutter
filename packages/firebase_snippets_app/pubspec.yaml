@@ -28,6 +28,7 @@ dependencies:
   cloud_firestore_odm: ^1.0.0-dev.11
   cloud_functions: ^3.2.10
   firebase_remote_config: ^2.0.2
+  firebase_analytics: ^9.1.2
   firebase_storage: ^10.2.9
   firebase_messaging: ^11.2.11
   firebase_dynamic_links: ^4.1.2
