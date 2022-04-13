@@ -14,7 +14,9 @@
 
 // [START set_up_environment]
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 // [END set_up_environment]
 
@@ -25,32 +27,12 @@ import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  // TODO: special-case -- be sure to document
-// [START get_firestore_instance]
-
-  /// In the Firebase documentation, the code should look like the following example
-  /// In this snippets app, we're using the FlutterFire CLI to generate FirebaseOptions
-  ///```dart
-  /// WidgetsFlutterBinding.ensureInitialized();
-  /// await Firebase.initializeApp(
-  ///   options: const FirebaseOptions(
-  ///     apiKey: '### FIREBASE API KEY ###',
-  ///     authDomain: '### FIREBASE AUTH DOMAIN ###',
-  ///     projectId: '### CLOUD FIRESTORE PROJECT ID ###'
-  ///   )
-  /// );
-  /// final firestore = FirebaseFirestore.instance;
-  /// ```
-
-// [END get_firestore_instance]
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   final db = FirebaseFirestore.instance;
-  // TODO: special-case -- be sure to document
 
   // [START access_data_offline_configure_offline_persistence]
   final settings = db.settings.copyWith(persistenceEnabled: true);
@@ -66,12 +48,24 @@ void main() async {
   FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.instance;
   // [END get_started_get_singleton_object]
 
+  // [START dynamic_links_get_initial_links]
+  final PendingDynamicLinkData? initialLink =
+      await FirebaseDynamicLinks.instance.getInitialLink();
+  // [END dynamic_links_get_initial_links]
+
+  if (kIsWeb) {
+    // [START auth_persistingAuthState]
+    await FirebaseAuth.instance.setPersistence(Persistence.NONE);
+    // [END auth_persistingAuthState]
+  }
+
   if (!kReleaseMode) db.useFirestoreEmulator('localhost', 8080);
 
   runApp(
     MyApp(
       firestore: db,
       firebaseRemoteConfig: firebaseRemoteConfig,
+      initialLink: null,
     ),
   );
 }
