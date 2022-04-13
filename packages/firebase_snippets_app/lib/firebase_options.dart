@@ -50,6 +50,11 @@ class DefaultFirebaseOptions {
     );
   }
 
+  /// Per this SO answer by Puf@, it is okay to put this info in GitHub,
+  /// as its not really 'secret' https://stackoverflow.com/a/37484053
+  ///
+  /// Instead of hiding this information, security should be handled
+  /// with access rules to individual products.
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDu2FRBnv0pV01dHHOQuk26pR1oYcZpGTE',
     appId: '1:220375889386:web:bc468dd9e586597b6bae93',
@@ -74,8 +79,7 @@ class DefaultFirebaseOptions {
     projectId: 'flutter-fire-snippets',
     storageBucket: 'flutter-fire-snippets.appspot.com',
     iosClientId:
-    '220375889386-8v73sv2lia3e7c12h0btp2tfbj0um4it.apps.googleusercontent.com',
+        '220375889386-8v73sv2lia3e7c12h0btp2tfbj0um4it.apps.googleusercontent.com',
     iosBundleId: 'com.fluttersnippets.app',
   );
-
 }
