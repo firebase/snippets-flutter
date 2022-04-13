@@ -15,8 +15,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:firebase_snippets_app/snippets/analytics.dart';
+import 'package:firebase_snippets_app/snippets/auth.dart';
+import 'package:firebase_snippets_app/snippets/cloud_functions.dart';
+import 'package:firebase_snippets_app/snippets/cloud_messaging.dart';
+import 'package:firebase_snippets_app/snippets/cloud_storage.dart';
+import 'package:firebase_snippets_app/snippets/crashlytics.dart';
+import 'package:firebase_snippets_app/snippets/database.dart';
+import 'package:firebase_snippets_app/snippets/dynamic_links.dart';
+import 'package:firebase_snippets_app/snippets/firebase_performance.dart';
 import 'package:firebase_snippets_app/snippets/firestore.dart';
+import 'package:firebase_snippets_app/snippets/ml_model_downloader.dart';
 import 'package:firebase_snippets_app/snippets/remote_config.dart';
+import 'package:firebase_snippets_app/snippets/snippet_base.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatefulWidget {
@@ -36,16 +47,32 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late final FirestoreSnippets _firestoreSnippets;
-  late final RemoteConfigSnippets _remoteConfigSnippets;
-
   @override
   void initState() {
-    _firestoreSnippets = FirestoreSnippets(widget.firestore);
-    _remoteConfigSnippets = RemoteConfigSnippets(widget.firebaseRemoteConfig);
+    final List<DocSnippet> _allSnippets = [
+      // Build Products
+      AuthenticationSnippets(),
+      RealtimeDatabaseSnippets(),
+      FirestoreSnippets(widget.firestore),
+      CloudStorageSnippets(),
+      MLModelDownloaderSnippets(),
+      CloudFunctionsSnippets(),
 
-    _firestoreSnippets.runAll();
-    _remoteConfigSnippets.runAll();
+      // Release and Monitor Products
+      CrashlyticsSnippets(),
+      FirebasePerformanceMonitoringSnippets(),
+
+      // Engage Products
+      AnalyticsSnippets(),
+      RemoteConfigSnippets(widget.firebaseRemoteConfig),
+      CloudMessagingSnippets(),
+      DynamicLinkSnippets(),
+    ];
+
+    for (var snippet in _allSnippets) {
+      snippet.runAll();
+    }
+
     super.initState();
   }
 
