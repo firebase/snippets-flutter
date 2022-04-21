@@ -1,14 +1,14 @@
 {
   "rules": {
     ".read": "false",
-    ".write": "false"
-  },
-  "posts": {
-    ".read": "true",
-    ".write": "true"
-  },
-  "users": {
-    ".read": "true",
-    ".write": "true"
+    ".write": "false",
+    "posts": {
+      ".read": "true",
+      ".write": "true"
+    },
+    "users": {
+      ".read": "true",
+      ".write": "true"
+    }
   }
 }
