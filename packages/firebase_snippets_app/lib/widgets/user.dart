@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../snippets/firestore_odm/user_model.dart';
 
-// Not currently in the docs, so not currently being tested.
 class UserLabel extends StatelessWidget {
   const UserLabel(this.id);
 

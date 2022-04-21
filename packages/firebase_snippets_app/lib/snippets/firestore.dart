@@ -188,23 +188,23 @@ class FirestoreSnippets extends DocSnippet {
   }
 
   void addData_addADocument() {
-    // [START add_data_add_a_document ]
+    // [START add_data_add_a_document]
     db.collection("cities").doc("new-city-id").set({"name": "Chicago"});
-    // [END add_data_add_a_document ]
+    // [END add_data_add_a_document]
   }
 
   void addData_addADocument2() {
-    // [START add_data_add_a_document_2 ]
+    // [START add_data_add_a_document_2]
     // Add a new document with a generated id.
     final data = {"name": "Tokyo", "country": "Japan"};
 
     db.collection("cities").add(data).then((documentSnapshot) =>
         print("Added Data with ID: ${documentSnapshot.id}"));
-    // [END add_data_add_a_document_2 ]
+    // [END add_data_add_a_document_2]
   }
 
   void addData_addADocument3() {
-    // [START add_data_add_a_document_3 ]
+    // [START add_data_add_a_document_3]
     // Add a new document with a generated id.
     final data = <String, dynamic>{};
 
@@ -213,7 +213,7 @@ class FirestoreSnippets extends DocSnippet {
     // Later...
     newCityRef.set(data);
 
-    // [END add_data_add_a_document_3 ]
+    // [END add_data_add_a_document_3]
   }
 
   void addData_updateADocument() {

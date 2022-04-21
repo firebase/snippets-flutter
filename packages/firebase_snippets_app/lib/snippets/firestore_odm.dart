@@ -6,7 +6,8 @@ import 'package:firebase_snippets_app/snippets/snippet_base.dart';
 class ODMSnippets extends DocSnippet {
   @override
   void runAll() {
-    // TODO: implement runAll
+    /// testing ODM isn't yet supported.
+    /// It's still in Alpha, and it will require additional CI work
   }
 
   void references_performQueries() async {
