@@ -911,7 +911,7 @@ class FirestoreSnippets extends DocSnippet {
     // [END paginate_data_set_cursor_based_on_multiple_fields]
   }
 
-  void accessDataOffline_configure() {
+  void accessDataOffline_configure() async {
     // [START access_data_offline_configure_offline_persistence]
     // Apple and Android
     db.settings = const Settings(persistenceEnabled: true);
