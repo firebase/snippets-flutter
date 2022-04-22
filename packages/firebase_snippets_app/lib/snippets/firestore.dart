@@ -297,10 +297,9 @@ class FirestoreSnippets extends DocSnippet {
   }
 
   void transactions_passingInformationOutOfTransactions() {
-    // [START transactions_passing_information_out_of_transactions]
-
     // TODO: ewindmill@ - either the above example (using asnyc) or this example
     // using (then) is "more correct". Figure out which one.
+    // [START transactions_passing_information_out_of_transactions]
     final sfDocRef = db.collection("cities").doc("SF");
     db.runTransaction((transaction) {
       return transaction.get(sfDocRef).then((sfDoc) {
@@ -317,18 +316,6 @@ class FirestoreSnippets extends DocSnippet {
 
   void transactions_batchedWrites() {
     // [START transactions_batched_writes]
-    /*
-
-
-
-
-
-
-// Commit the batch
-batch.commit().then(() => {
-    // ...
-});
-   */
     // Get a new write batch
     final batch = db.batch();
 
@@ -453,9 +440,9 @@ batch.commit().then(() => {
   }
 
   void getDataOnce_customObjects() {
-    // [START get_data_once_custom_objects]
     // TODO: should this be included?
     // This isn't really specific to Firestore, it's just serdes
+    // [START get_data_once_custom_objects]
     final docRef = db.collection("cities").doc("BJ");
     docRef.get().then((documentSnapshot) {
       final data = documentSnapshot.data() as Map<String, dynamic>;
@@ -586,9 +573,6 @@ batch.commit().then(() => {
 
   void performSimpleAndCompoundQueries_exampleData() {
     // [START perform_simple_and_compound_queries_example_data]
-    /*
-
-   */
     final cities = db.collection("cities");
     final data1 = <String, dynamic>{
       "name": "San Francisco",
@@ -670,9 +654,6 @@ batch.commit().then(() => {
 
   void performSimpleAndCompoundQueries_queryOperators() {
     // [START perform_simple_and_compound_queries_query_operators]
-    /*
-
-   */
     final citiesRef = db.collection("cities");
     final stateQuery = citiesRef.where("state", isEqualTo: "CA");
     final populationQuery = citiesRef.where("population", isLessThan: 100000);
