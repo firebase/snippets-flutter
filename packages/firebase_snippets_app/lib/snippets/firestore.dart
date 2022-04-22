@@ -698,6 +698,16 @@ class FirestoreSnippets extends DocSnippet {
     // [END perform_simple_and_compound_queries_array_contains_any]
   }
 
+  void performSimpleAndCompoundQueries_inArray() {
+    // [START perform_simple_and_compound_queries_array_wherein]
+    final citiesRef = db.collection("cities");
+    final cities = citiesRef.where("regions", whereIn: [
+      ["west_coast"],
+      ["east_coast"]
+    ]);
+    // [END perform_simple_and_compound_queries_array_wherein]
+  }
+
   void performSimpleAndCompoundQueries_compoundQueries() {
     // [START perform_simple_and_compound_queries_compound_queries]
     final citiesRef = db.collection("cities");
@@ -901,6 +911,25 @@ class FirestoreSnippets extends DocSnippet {
     // [END paginate_data_set_cursor_based_on_multiple_fields]
   }
 
+  void accessDataOffline_configure() {
+    // [START access_data_offline_configure_offline_persistence]
+    // Apple and Android
+    db.settings = const Settings(persistenceEnabled: true);
+
+    // Web
+    await db.enablePersistence(const PersistenceSettings(synchronizeTabs: true));
+    // [END access_data_offline_configure_offline_persistence]
+  }
+
+  void accessDataOffline_configureCache() {
+    // [START access_data_offline_configure_cache_size]
+    db.settings = const Settings(
+      persistenceEnabled: true,
+      cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+    );
+    // [END access_data_offline_configure_cache_size]
+  }
+
   void accessDataOffline_listenToOfflineData() {
     // [START access_data_offline_listen_to_offline_data]
     db
@@ -930,8 +959,8 @@ class FirestoreSnippets extends DocSnippet {
 
   void accessDataOffline_enableNetwork() {
     // [START access_data_offline_enable_network]
-    db.disableNetwork().then((_) {
-      // Do offline things
+    db.enableNetwork().then((_) {
+      // Back online
     });
     // [END access_data_offline_enable_network]
   }
