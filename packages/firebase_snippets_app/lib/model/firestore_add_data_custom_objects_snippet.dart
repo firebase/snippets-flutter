@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+// [START add_data_custom_objects]
 class City {
   final String? name;
   final String? state;
@@ -29,6 +32,16 @@ class City {
     this.regions,
   });
 
+  City.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  )   : name = snapshot.data()?["name"],
+        state = snapshot.data()?["state"],
+        country = snapshot.data()?["country"],
+        capital = snapshot.data()?["capital"],
+        population = snapshot.data()?["population"],
+        regions = snapshot.data()?["regions"];
+
   Map<String, dynamic> toFirestore() {
     return {
       if (name != null) "name": name,
@@ -40,3 +53,4 @@ class City {
     };
   }
 }
+// [END add_data_custom_objects]
