@@ -440,16 +440,15 @@ class FirestoreSnippets extends DocSnippet {
   }
 
   void getDataOnce_customObjects() {
-    // TODO: should this be included?
-    // This isn't really specific to Firestore, it's just serdes
     // [START get_data_once_custom_objects]
-    final docRef = db.collection("cities").doc("BJ");
-    docRef.get().then((documentSnapshot) {
-      final data = documentSnapshot.data() as Map<String, dynamic>;
-      final city = City(
-        name: data['name'],
-      );
-    });
+    final docRef = db
+        .collection("cities")
+        .withConverter(
+          fromFirestore: CityConversions.fromFirestore,
+          toFirestore: CityConversions.toFirestore,
+        )
+        .doc("LA");
+    docRef.set(City("Los Angeles", "CA", "USA"));
     // [END get_data_once_custom_objects]
   }
 
@@ -1101,3 +1100,32 @@ class Shard {
   Shard(this.count);
 }
 // [END solutions_distributed_counters]
+
+// [START get_data_once_custom_objects_class_def]
+class City {
+  String name;
+  String state;
+  String country;
+
+  City(this.name, this.state, this.country);
+
+  @override
+  toString() => "$name, $state, $country";
+}
+
+extension CityConversions on City {
+  static City fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return City(data?["name"], data?["state"], data?["country"]);
+  }
+
+  static Map<String, dynamic> toFirestore(City city, SetOptions? options) => {
+        "name": city.name,
+        "state": city.state,
+        "country": city.country,
+      };
+}
+// [END get_data_once_custom_objects_class_def]
