@@ -158,22 +158,8 @@ class FirestoreSnippets extends DocSnippet {
     // [END add_data_data_types]
   }
 
-  void addData_customObjects() {
-    // [START add_data_custom_objects]
-    // TODO: is this supported in Dart yet?
-    // in the current docs, it isn't supported for about half the languages
-    // if it is, it will look like the code in [./custom_snippets/firestore_add_data_custom_objects_snippet.dart]
-
-    // This is how it's done in some other languages, but this doesn't seem like it should be included,
-    // because it isn't really a Firebase feature. I'm just converting Objects into a Map before submitting it.
-  }
-
-  void addData_customObjects2() {
+  void addData_customObjects2() async {
     // [START add_data_custom_objects2]
-    // TODO: is this supported in Dart yet?
-    // in the current docs, it isn't supported for about half the languages
-    // See note above before including this in the docs.
-
     final city = City(
       name: "Los Angeles",
       state: "CA",
@@ -182,8 +168,14 @@ class FirestoreSnippets extends DocSnippet {
       population: 5000000,
       regions: ["west_coast", "socal"],
     );
-
-    db.collection("cities").doc("LA").set(city.toFirestore());
+    final docRef = db
+        .collection("cities")
+        .withConverter(
+          fromFirestore: City.fromFirestore,
+          toFirestore: (City city, options) => city.toFirestore(),
+        )
+        .doc("LA");
+    await docRef.set(city);
     // [END add_data_custom_objects2]
   }
 
@@ -441,14 +433,17 @@ class FirestoreSnippets extends DocSnippet {
 
   void getDataOnce_customObjects() async {
     // [START get_data_once_custom_objects]
-    final docRef = db
-        .collection("cities")
-        .withConverter(
-          fromFirestore: CityConversions.fromFirestore,
-          toFirestore: CityConversions.toFirestore,
-        )
-        .doc("LA");
-    await docRef.set(City("Los Angeles", "CA", "USA"));
+    final ref = db.collection("cities").doc("LA").withConverter(
+          fromFirestore: City.fromFirestore,
+          toFirestore: (City city, _) => city.toFirestore(),
+        );
+    final docSnap = await ref.get();
+    final city = docSnap.data(); // Convert to City object
+    if (city != null) {
+      print(city);
+    } else {
+      print("No such document.");
+    }
     // [END get_data_once_custom_objects]
   }
 
@@ -916,7 +911,8 @@ class FirestoreSnippets extends DocSnippet {
     db.settings = const Settings(persistenceEnabled: true);
 
     // Web
-    await db.enablePersistence(const PersistenceSettings(synchronizeTabs: true));
+    await db
+        .enablePersistence(const PersistenceSettings(synchronizeTabs: true));
     // [END access_data_offline_configure_offline_persistence]
   }
 
@@ -1100,32 +1096,3 @@ class Shard {
   Shard(this.count);
 }
 // [END solutions_distributed_counters]
-
-// [START get_data_once_custom_objects_class_def]
-class City {
-  String name;
-  String state;
-  String country;
-
-  City(this.name, this.state, this.country);
-
-  @override
-  toString() => "$name, $state, $country";
-}
-
-extension CityConversions on City {
-  static City fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
-  ) {
-    final data = snapshot.data();
-    return City(data?["name"], data?["state"], data?["country"]);
-  }
-
-  static Map<String, dynamic> toFirestore(City city, SetOptions? options) => {
-        "name": city.name,
-        "state": city.state,
-        "country": city.country,
-      };
-}
-// [END get_data_once_custom_objects_class_def]
