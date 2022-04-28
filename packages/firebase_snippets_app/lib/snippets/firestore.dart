@@ -439,7 +439,7 @@ class FirestoreSnippets extends DocSnippet {
     // [END get_data_once_source_options]
   }
 
-  void getDataOnce_customObjects() {
+  void getDataOnce_customObjects() async {
     // [START get_data_once_custom_objects]
     final docRef = db
         .collection("cities")
@@ -448,7 +448,7 @@ class FirestoreSnippets extends DocSnippet {
           toFirestore: CityConversions.toFirestore,
         )
         .doc("LA");
-    docRef.set(City("Los Angeles", "CA", "USA"));
+    await docRef.set(City("Los Angeles", "CA", "USA"));
     // [END get_data_once_custom_objects]
   }
 
