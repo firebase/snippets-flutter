@@ -411,9 +411,12 @@ class FirestoreSnippets extends DocSnippet {
     // [START get_data_once_get_a_document]
     final docRef = db.collection("cities").doc("SF");
     docRef.get().then(
-          (res) => print("Successfully completed"),
-          onError: (e) => print("Error completing: $e"),
-        );
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        // ...
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
     // [END get_data_once_get_a_document]
   }
 
