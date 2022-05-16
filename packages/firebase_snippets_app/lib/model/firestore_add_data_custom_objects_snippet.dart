@@ -40,7 +40,8 @@ class City {
         country = snapshot.data()?["country"],
         capital = snapshot.data()?["capital"],
         population = snapshot.data()?["population"],
-        regions = snapshot.data()?["regions"];
+        regions =
+            (snapshot.data()?["regions"] as List<dynamic>?)?.cast<String>();
 
   Map<String, dynamic> toFirestore() {
     return {
