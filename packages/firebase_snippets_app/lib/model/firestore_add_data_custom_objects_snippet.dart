@@ -32,16 +32,20 @@ class City {
     this.regions,
   });
 
-  City.fromFirestore(
+  factory City.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
-  )   : name = snapshot.data()?["name"],
-        state = snapshot.data()?["state"],
-        country = snapshot.data()?["country"],
-        capital = snapshot.data()?["capital"],
-        population = snapshot.data()?["population"],
-        regions =
-            (snapshot.data()?["regions"] as List<dynamic>?)?.cast<String>();
+  ) {
+    final data = snapshot.data() as Map<String, dynamic>;
+    return City(
+      name: data['name'],
+      state: data['state'],
+      country: data['country'],
+      capital: data['capital'],
+      population: data['population'],
+      regions: data['regions'] as List<String>,
+    );
+  }
 
   Map<String, dynamic> toFirestore() {
     return {
