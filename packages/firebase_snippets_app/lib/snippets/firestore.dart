@@ -676,14 +676,14 @@ class FirestoreSnippets extends DocSnippet {
   void performSimpleAndCompoundQueries_inNotInArrayContainsAny() {
     // [START perform_simple_and_compound_queries_in_not_in_array_contains_any]
     final citiesRef = db.collection("cities");
-    final cities = citiesRef.where("regions", whereIn: ["USA", "Japan"]);
+    final cities = citiesRef.where("country", whereIn: ["USA", "Japan"]);
     // [END perform_simple_and_compound_queries_in_not_in_array_contains_any]
   }
 
   void performSimpleAndCompoundQueries_notIn() {
     // [START perform_simple_and_compound_queries_not_in]
     final citiesRef = db.collection("cities");
-    final cities = citiesRef.where("regions", whereNotIn: ["USA", "Japan"]);
+    final cities = citiesRef.where("country", whereNotIn: ["USA", "Japan"]);
     // [END perform_simple_and_compound_queries_not_in]
   }
 
