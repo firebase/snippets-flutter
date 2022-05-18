@@ -36,14 +36,15 @@ class City {
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
-    final data = snapshot.data() as Map<String, dynamic>;
+    final data = snapshot.data();
     return City(
-      name: data['name'],
-      state: data['state'],
-      country: data['country'],
-      capital: data['capital'],
-      population: data['population'],
-      regions: data['regions'] as List<String>,
+      name: data?['name'],
+      state: data?['state'],
+      country: data?['country'],
+      capital: data?['capital'],
+      population: data?['population'],
+      regions:
+          data?['regions'] is Iterable ? List.from(data?['regions']) : null,
     );
   }
 
