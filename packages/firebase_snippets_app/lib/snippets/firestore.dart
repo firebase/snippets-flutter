@@ -847,7 +847,7 @@ class FirestoreSnippets extends DocSnippet {
 
   void paginateData_addASimpleCursor2() {
     // [START paginate_data_add_a_simple_cursor2]
-    db.collection("cities").orderBy("population").startAt([1000000]);
+    db.collection("cities").orderBy("population").endAt([1000000]);
     // [END paginate_data_add_a_simple_cursor2]
   }
 
