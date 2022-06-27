@@ -274,8 +274,7 @@ class RealtimeDatabaseSnippets implements DocSnippet {
     final myUserId = FirebaseAuth.instance.currentUser?.uid;
     final topUserPostsRef = FirebaseDatabase.instance
         .ref("user-posts/$myUserId")
-        .orderByChild("starCount")
-        .ref;
+        .orderByChild("starCount");
     // [END lists_of_data_sorting]
   }
 
