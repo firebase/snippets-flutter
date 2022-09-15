@@ -661,7 +661,7 @@ class FirestoreSnippets extends DocSnippet {
   void performSimpleAndCompoundQueries_notEqual() {
     // [START perform_simple_and_compound_queries_not_equal]
     final citiesRef = db.collection("cities");
-    final notCapitals = citiesRef.where("capital", isNotEqualTo: true);
+    final notCapitals = citiesRef.where("capital", isNotEqualTo: false);
     // [END perform_simple_and_compound_queries_not_equal]
   }
 
