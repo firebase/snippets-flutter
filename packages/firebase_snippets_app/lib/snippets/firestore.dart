@@ -453,7 +453,12 @@ class FirestoreSnippets extends DocSnippet {
   void getDataOnce_multipleDocumentsFromACollection() {
     // [START get_data_once_multiple_documents_from_a_collection]
     db.collection("cities").where("capital", isEqualTo: true).get().then(
-          (res) => print("Successfully completed"),
+          (querySnapshot) {
+            print("Successfully completed");
+            for (var docSnapshot in querySnapshot.docs) {
+              print('${docSnapshot.id} => ${docSnapshot.data()}');
+            }
+          },
           onError: (e) => print("Error completing: $e"),
         );
     // [END get_data_once_multiple_documents_from_a_collection]
@@ -462,7 +467,12 @@ class FirestoreSnippets extends DocSnippet {
   void getDataOnce_getAllDocumentsInACollection() {
     // [START get_data_once_get_all_documents_in_a_collection]
     db.collection("cities").get().then(
-          (res) => print("Successfully completed"),
+          (querySnapshot) {
+            print("Successfully completed");
+            for (var docSnapshot in querySnapshot.docs) {
+              print('${docSnapshot.id} => ${docSnapshot.data()}');
+            }
+          },
           onError: (e) => print("Error completing: $e"),
         );
     // [END get_data_once_get_all_documents_in_a_collection]
