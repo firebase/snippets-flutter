@@ -804,6 +804,33 @@ class FirestoreSnippets extends DocSnippet {
     // [END perform_simple_and_compound_queries_collection_groups2]
   }
 
+  void aggregationQuery_count() {
+    // [START count_aggregate_collection]
+    // Returns number of documents in users collection
+    db
+      .collection("users")
+      .count()
+      .then(
+        (res) => print(res.data().count), 
+        onError: (e) => print("Error completing: $e"),
+      );
+    // [END count_aggregate_collection]
+  }
+
+  void aggregationQuery_count2() {
+    // [START count_aggregate_query]
+    // This also works with collectionGroup queries.
+    db
+      .collection("users")
+      .where("age", isGreaterThan: 10)
+      .count()
+      .then(
+        (res) => print(res.data().count), 
+        onError: (e) => print("Error completing: $e"),
+      );
+    // [END count_aggregate_query]
+  }
+
   void orderAndLimitData_orderAndLimitData() {
     // [START order_and_limit_data_order_and_limit_data]
     final citiesRef = db.collection("cities");
