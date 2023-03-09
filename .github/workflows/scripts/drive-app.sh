@@ -7,5 +7,5 @@ TARGET_PATH="packages/$PROJECT_NAME/"
 pushd "$TARGET_PATH" || exit &&
 flutter clean &&
 flutter pub get &&
-flutter format . &&
+dart format . &&
 flutter test integration_test
