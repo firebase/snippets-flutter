@@ -34,6 +34,7 @@ class FirestoreSnippets extends DocSnippet {
     getStarted_readData();
     dataModel_references();
     dataModel_subCollections();
+    getDataOnce_getAllDocumentsInASubcollection();
   }
 
   void getStarted_addData() async {
@@ -453,29 +454,45 @@ class FirestoreSnippets extends DocSnippet {
   void getDataOnce_multipleDocumentsFromACollection() {
     // [START get_data_once_multiple_documents_from_a_collection]
     db.collection("cities").where("capital", isEqualTo: true).get().then(
-          (querySnapshot) {
-            print("Successfully completed");
-            for (var docSnapshot in querySnapshot.docs) {
-              print('${docSnapshot.id} => ${docSnapshot.data()}');
-            }
-          },
-          onError: (e) => print("Error completing: $e"),
-        );
+      (querySnapshot) {
+        print("Successfully completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          print('${docSnapshot.id} => ${docSnapshot.data()}');
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
     // [END get_data_once_multiple_documents_from_a_collection]
   }
 
   void getDataOnce_getAllDocumentsInACollection() {
     // [START get_data_once_get_all_documents_in_a_collection]
     db.collection("cities").get().then(
-          (querySnapshot) {
-            print("Successfully completed");
-            for (var docSnapshot in querySnapshot.docs) {
-              print('${docSnapshot.id} => ${docSnapshot.data()}');
-            }
-          },
-          onError: (e) => print("Error completing: $e"),
-        );
+      (querySnapshot) {
+        print("Successfully completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          print('${docSnapshot.id} => ${docSnapshot.data()}');
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
     // [END get_data_once_get_all_documents_in_a_collection]
+  }
+
+  void getDataOnce_getAllDocumentsInASubcollection() {
+    // [START get_data_once_get_all_documents_in_a_subcollection]
+    // [START firestore_query_subcollection]
+    db.collection("cities").doc("SF").collection("landmarks").get().then(
+      (querySnapshot) {
+        print("Successfully completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          print('${docSnapshot.id} => ${docSnapshot.data()}');
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    // [END firestore_query_subcollection]
+    // [END get_data_once_get_all_documents_in_a_subcollection]
   }
 
   void getDataOnce_listSubCollections() {
@@ -807,27 +824,20 @@ class FirestoreSnippets extends DocSnippet {
   void aggregationQuery_count() {
     // [START count_aggregate_collection]
     // Returns number of documents in users collection
-    db
-      .collection("users")
-      .count()
-      .then(
-        (res) => print(res.data().count), 
-        onError: (e) => print("Error completing: $e"),
-      );
+    db.collection("users").count().then(
+          (res) => print(res.data().count),
+          onError: (e) => print("Error completing: $e"),
+        );
     // [END count_aggregate_collection]
   }
 
   void aggregationQuery_count2() {
     // [START count_aggregate_query]
     // This also works with collectionGroup queries.
-    db
-      .collection("users")
-      .where("age", isGreaterThan: 10)
-      .count()
-      .then(
-        (res) => print(res.data().count), 
-        onError: (e) => print("Error completing: $e"),
-      );
+    db.collection("users").where("age", isGreaterThan: 10).count().then(
+          (res) => print(res.data().count),
+          onError: (e) => print("Error completing: $e"),
+        );
     // [END count_aggregate_query]
   }
 
