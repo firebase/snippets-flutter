@@ -810,6 +810,7 @@ class FirestoreSnippets extends DocSnippet {
     db
       .collection("users")
       .count()
+      .get()
       .then(
         (res) => print(res.data().count), 
         onError: (e) => print("Error completing: $e"),
@@ -824,6 +825,7 @@ class FirestoreSnippets extends DocSnippet {
       .collection("users")
       .where("age", isGreaterThan: 10)
       .count()
+      .get()
       .then(
         (res) => print(res.data().count), 
         onError: (e) => print("Error completing: $e"),
