@@ -481,6 +481,7 @@ class FirestoreSnippets extends DocSnippet {
 
   void getDataOnce_getAllDocumentsInASubcollection() {
     // [START get_data_once_get_all_documents_in_a_subcollection]
+    // [START firestore_query_subcollection]
     db.collection("cities").doc("SF").collection("landmarks").get().then(
       (querySnapshot) {
         print("Successfully completed");
@@ -490,6 +491,7 @@ class FirestoreSnippets extends DocSnippet {
       },
       onError: (e) => print("Error completing: $e"),
     );
+    // [END firestore_query_subcollection]
     // [END get_data_once_get_all_documents_in_a_subcollection]
   }
 
