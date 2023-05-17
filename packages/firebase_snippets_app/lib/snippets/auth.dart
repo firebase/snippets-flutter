@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:firebase_snippets_app/snippets/snippet_base.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -576,6 +577,7 @@ class AuthenticationSnippets implements DocSnippet {
           await auth.signInWithPhoneNumber(
               '+44 7123 123 456',
               RecaptchaVerifier(
+                auth: FirebaseAuthPlatform.instance,
                 container: 'recaptcha',
                 size: RecaptchaVerifierSize.compact,
                 theme: RecaptchaVerifierTheme.dark,
@@ -584,6 +586,7 @@ class AuthenticationSnippets implements DocSnippet {
 
       // [START phone_auth_verify_recaptcha]
       RecaptchaVerifier(
+        auth: FirebaseAuthPlatform.instance,
         onSuccess: () => print('reCAPTCHA Completed!'),
         onError: (FirebaseAuthException error) => print(error),
         onExpired: () => print('reCAPTCHA Expired!'),
