@@ -824,8 +824,8 @@ class FirestoreSnippets extends DocSnippet {
   void aggregationQuery_count() {
     // [START count_aggregate_collection]
     // Returns number of documents in users collection
-    db.collection("users").count().then(
-          (res) => print(res.data().count),
+    db.collection("users").count().get().then(
+          (res) => print(res.count),
           onError: (e) => print("Error completing: $e"),
         );
     // [END count_aggregate_collection]
@@ -834,8 +834,8 @@ class FirestoreSnippets extends DocSnippet {
   void aggregationQuery_count2() {
     // [START count_aggregate_query]
     // This also works with collectionGroup queries.
-    db.collection("users").where("age", isGreaterThan: 10).count().then(
-          (res) => print(res.data().count),
+    db.collection("users").where("age", isGreaterThan: 10).count().get().then(
+          (res) => print(res.count),
           onError: (e) => print("Error completing: $e"),
         );
     // [END count_aggregate_query]
