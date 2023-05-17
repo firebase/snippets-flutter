@@ -23,35 +23,35 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^1.12.0
-  cloud_firestore: ^3.1.8
+  firebase_core: ^2.12.0
+  cloud_firestore: ^4.7.0
   cloud_firestore_odm: ^1.0.0-dev.11
-  cloud_functions: ^3.2.10
-  firebase_remote_config: ^2.0.2
-  firebase_analytics: ^9.1.2
-  firebase_storage: ^10.2.9
-  firebase_messaging: ^11.2.11
-  firebase_dynamic_links: ^4.1.2
-  firebase_ml_model_downloader: ^0.1.0+9
-  firebase_auth: ^3.3.12
+  cloud_functions: ^4.3.0
+  firebase_remote_config: ^4.2.0
+  firebase_analytics: ^10.4.0
+  firebase_storage: ^11.2.0
+  firebase_messaging: ^14.6.0
+  firebase_dynamic_links: ^5.3.0
+  firebase_ml_model_downloader: ^0.2.3
+  firebase_auth: ^4.6.0
   path_provider: ^2.0.9
-  firebase_database: ^9.0.9
-  firebase_performance: ^0.8.0+8
+  firebase_database: ^10.2.0
+  firebase_performance: ^0.9.2
   json_annotation: ^4.4.0
-  google_sign_in: ^5.2.4
-  flutter_facebook_auth: ^4.1.2
+  google_sign_in: ^6.1.0
+  flutter_facebook_auth: ^5.0.11
   github_sign_in: ^0.0.4
   twitter_login: ^4.1.0
-  sign_in_with_apple: ^3.3.0
+  sign_in_with_apple: ^4.3.0
   crypto: ^3.0.1
-  firebase_crashlytics: ^2.6.2
+  firebase_crashlytics: ^3.3.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   build_runner: ^2.1.8
   cloud_firestore_odm_generator: ^1.0.0-dev.11
   json_serializable: ^6.1.5
