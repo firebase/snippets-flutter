@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_core: ^2.12.0
-  cloud_firestore: ^4.7.0
+  cloud_firestore: ^4.8.5
   cloud_firestore_odm: ^1.0.0-dev.11
   cloud_functions: ^4.3.0
   firebase_remote_config: ^4.2.0
