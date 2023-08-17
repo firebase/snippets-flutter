@@ -1149,8 +1149,6 @@ class FirestoreSnippets extends DocSnippet {
     // [END solutions_distributed_counters4]
   }
 
-  void 
-
   // todo: Firebase functions aren't supported in Dart
   void deleteDataWithCallableCloudFunc_clientInvocation() {
     // [START delete_data_with_callable_cloud_func_client_invocation]
