@@ -842,7 +842,7 @@ class FirestoreSnippets extends DocSnippet {
           Filter("capital", isEqualTo: true),
           Filter("population", isGreaterThan: 1000000)
         )));
-    // [END firestore_query_filter_or_compund]
+    // [END firestore_query_filter_or_compound]
   }
 
   void aggregationQuery_count() {
