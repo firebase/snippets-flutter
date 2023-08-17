@@ -821,6 +821,30 @@ class FirestoreSnippets extends DocSnippet {
     // [END perform_simple_and_compound_queries_collection_groups2]
   }
 
+  void filterQuery_or() {
+    // [START firestore_query_filter_or]
+    var query = db.collection("cities")
+      .where(
+        Filter.or(
+          Filter("capital", isEqualTo: true),
+          Filter("population", isGreaterThan: 1000000)
+        ));
+    // [END firestore_query_filter_or]
+  }
+
+  void filterQuery_or2() {
+    // [START firestore_query_filter_or_compound]
+    var query = db.collection("cities")
+      .where(
+        Filter.and(
+          Filter("state", isEqualTo: "CA"),
+        Filter.or(
+          Filter("capital", isEqualTo: true),
+          Filter("population", isGreaterThan: 1000000)
+        )));
+    // [END firestore_query_filter_or_compund]
+  }
+
   void aggregationQuery_count() {
     // [START count_aggregate_collection]
     // Returns number of documents in users collection
