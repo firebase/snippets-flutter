@@ -929,7 +929,7 @@ class FirestoreSnippets extends DocSnippet {
         final biggerThanSf = db
             .collection("cities")
             .orderBy("population")
-            .startAt([documentSnapshot]);
+            .startAtDocument(documentSnapshot);
       },
       onError: (e) => print("Error: $e"),
     );
@@ -951,7 +951,7 @@ class FirestoreSnippets extends DocSnippet {
         final next = db
             .collection("cities")
             .orderBy("population")
-            .startAfter([lastVisible]).limit(25);
+            .startAfterDocument(lastVisible).limit(25);
 
         // Use the query for pagination
         // ...
