@@ -865,6 +865,16 @@ class FirestoreSnippets extends DocSnippet {
     // [END count_aggregate_query]
   }
 
+   void aggerationQuery_sum() {
+    // [START sum_aggregate_query]
+    // This also works with collectionGroup queries.
+    db.collection("users").where("age", isGreaterThan: 10).aggregate(sum("age")).get().then(
+          (res) => print(res.getSum("age")),
+          onError: (e) => print("Error completing: $e"),
+        );
+    // [END sum_aggregate_query]
+  }
+
   void orderAndLimitData_orderAndLimitData() {
     // [START order_and_limit_data_order_and_limit_data]
     final citiesRef = db.collection("cities");
