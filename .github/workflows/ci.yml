@@ -53,6 +53,7 @@ jobs:
 
     - name: "Drive Example"
       uses: reactivecircus/android-emulator-runner@v2
+      shell: bash
       with:
         api-level: 28
         arch: x86_64
