@@ -49,7 +49,7 @@ jobs:
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 28
-        arch: x86_64
+        arch: arm64-v8
         # Firebase Firestore works without Google Play Services, so we don't use the `googleapis`
         # emulator target as it's considerably slower on CI.
         target: default
