@@ -40,12 +40,12 @@ dependencies:
   json_annotation: ^4.4.0
   google_sign_in: ^6.1.0
   flutter_facebook_auth: ^6.0.4
-  github_sign_in: ^0.0.4
   twitter_login: ^4.1.0
   sign_in_with_apple: ^6.1.0
   crypto: ^3.0.1
   firebase_crashlytics: ^3.3.0
   firebase_auth_platform_interface: ^7.3.0
+  firebase_vertexai: ^0.1.1
 
 dev_dependencies:
   flutter_test:
