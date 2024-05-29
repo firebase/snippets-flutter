@@ -39,20 +39,19 @@ dependencies:
   firebase_performance: ^0.9.2
   json_annotation: ^4.4.0
   google_sign_in: ^6.1.0
-  flutter_facebook_auth: ^5.0.11
-  github_sign_in: ^0.0.4
+  flutter_facebook_auth: ^7.0.0
   twitter_login: ^4.1.0
-  sign_in_with_apple: ^4.3.0
+  sign_in_with_apple: ^6.1.0
   crypto: ^3.0.1
   firebase_crashlytics: ^3.3.0
-  firebase_auth_platform_interface: ^6.15.1
+  firebase_auth_platform_interface: ^7.3.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-  flutter_lints: ^2.0.1
+  flutter_lints: ^4.0.0
   build_runner: ^2.1.8
   cloud_firestore_odm_generator: ^1.0.0-dev.11
   json_serializable: ^6.1.5
