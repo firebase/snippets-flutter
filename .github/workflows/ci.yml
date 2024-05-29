@@ -61,4 +61,4 @@ jobs:
         # emulator target as it's considerably slower on CI.
         target: default
         profile: Nexus 5X
-        script: bash ./.github/workflows/scripts/drive-app.sh firestore_snippets
+        script: bash ./.github/workflows/scripts/drive-app.sh firebase_snippets_app
