@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:220375889386:android:1a16e85eeab0d5896bae93",
         "android_client_info": {
-          "package_name": "com.example.firestore_snippets"
+          "package_name": "com.example.firebase_snippets_app"
         }
       },
       "oauth_client": [

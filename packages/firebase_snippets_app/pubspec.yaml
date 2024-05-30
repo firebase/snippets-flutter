@@ -39,7 +39,7 @@ dependencies:
   firebase_performance: ^0.9.2
   json_annotation: ^4.4.0
   google_sign_in: ^6.1.0
-  flutter_facebook_auth: ^6.0.4
+  flutter_facebook_auth: ^7.0.0
   twitter_login: ^4.1.0
   sign_in_with_apple: ^6.1.0
   crypto: ^3.0.1
