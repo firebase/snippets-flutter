@@ -52,7 +52,7 @@ class VertexAISnippets extends DocSnippet {
     // Specify a model that supports your use case
     // Gemini 1.5 models are versatile and can be used with all API capabilities
     final model = FirebaseVertexAI.instance
-        .generativeModel(model: '{{generic_model_name_initialization}}');
+        .generativeModel(model: 'gemini-1.5-flash');
     // [END initialize_model]
   }
 
@@ -68,7 +68,7 @@ class VertexAISnippets extends DocSnippet {
       topK: 16,
     );
     final model = FirebaseVertexAI.instance.generativeModel(
-      model: '{{generic_model_name_initialization}}',
+      model: 'gemini-1.5-flash',
       generationConfig: generationConfig,
     );
 
@@ -84,7 +84,7 @@ class VertexAISnippets extends DocSnippet {
       SafetySetting(HarmCategory.harassment, HarmBlockThreshold.high)
     ];
     final model = FirebaseVertexAI.instance.generativeModel(
-      model: '{{generic_model_name_initialization}}',
+      model: 'gemini-1.5-flash',
       safetySettings: safetySettings,
     );
 
@@ -101,7 +101,7 @@ class VertexAISnippets extends DocSnippet {
       SafetySetting(HarmCategory.hateSpeech, HarmBlockThreshold.high),
     ];
     final model = FirebaseVertexAI.instance.generativeModel(
-      model: '{{generic_model_name_initialization}}',
+      model: 'gemini-1.5-flash',
       safetySettings: safetySettings,
     );
 
