@@ -15,11 +15,13 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_snippets_app/model/firestore_add_data_custom_objects_snippet.dart';
 import 'package:firebase_snippets_app/model/restaurant.dart';
 import 'package:firebase_snippets_app/snippets/snippet_base.dart';
+import 'package:http/http.dart' as http;
 
 class FirestoreSnippets extends DocSnippet {
   @override
@@ -102,9 +104,26 @@ class FirestoreSnippets extends DocSnippet {
     // [END data_model_sub_collections]
   }
 
-  void dataBundles_loadingClientBundles() {
+  void dataBundles_loadingClientBundles() async {
     // [START data_bundles_loading_client_bundles]
-    // TODO - currently in scratch file
+    // Get a bundle from a server
+    final url = Uri.https('example.com', '/create-bundle');
+    final response = await http.get(url);
+    String string = response.body;
+    final buffer = Uint8List.fromList(string.codeUnits);
+
+    // Load a bundle from a buffer
+    LoadBundleTask task = FirebaseFirestore.instance.loadBundle(buffer);
+    await task.stream.toList();
+
+    // Use the cached named query
+    final results = await FirebaseFirestore.instance.namedQueryGet(
+      "example-query",
+      options: const GetOptions(
+        source: Source.cache,
+      ),
+    );
+
     // [END data_bundles_loading_client_bundles]
   }
 
