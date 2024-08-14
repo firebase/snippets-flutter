@@ -865,6 +865,52 @@ class FirestoreSnippets extends DocSnippet {
     // [END count_aggregate_query]
   }
 
+  void aggregationQuery_sum() {
+    // [START sum_aggregate_collection]
+    db.collection("users").aggregate(sum("age")).get().then(
+          (res) => print(res.getAverage("age")),
+          onError: (e) => print("Error completing: $e"),
+        );
+    // [END sum_aggregate_collection]
+  }
+
+  void aggregationQuery_sum2() {
+    // [START sum_aggregate_query]
+    db
+        .collection("users")
+        .where("age", isGreaterThan: 10)
+        .aggregate(sum("age"))
+        .get()
+        .then(
+          (res) => print(res.getAverage("age")),
+          onError: (e) => print("Error completing: $e"),
+        );
+    // [END sum_aggregate_query]
+  }
+
+  void aggregationQuery_average() {
+    // [START average_aggregate_collection]
+    db.collection("users").aggregate(average("age")).get().then(
+          (res) => print(res.getAverage("age")),
+          onError: (e) => print("Error completing: $e"),
+        );
+    // [END average_aggregate_collection]
+  }
+
+  void aggregationQuery_average2() {
+    // [START average_aggregate_query]
+    db
+        .collection("users")
+        .where("age", isGreaterThan: 10)
+        .aggregate(average("age"))
+        .get()
+        .then(
+          (res) => print(res.getAverage("age")),
+          onError: (e) => print("Error completing: $e"),
+        );
+    // [END average_aggregate_query]
+  }
+
   void orderAndLimitData_orderAndLimitData() {
     // [START order_and_limit_data_order_and_limit_data]
     final citiesRef = db.collection("cities");
