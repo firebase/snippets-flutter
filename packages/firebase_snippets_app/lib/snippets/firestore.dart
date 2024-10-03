@@ -109,8 +109,8 @@ class FirestoreSnippets extends DocSnippet {
     // Get a bundle from a server
     final url = Uri.https('example.com', '/create-bundle');
     final response = await http.get(url);
-    String string = response.body;
-    final buffer = Uint8List.fromList(string.codeUnits);
+    String body = response.body;
+    final buffer = Uint8List.fromList(body.codeUnits);
 
     // Load a bundle from a buffer
     LoadBundleTask task = FirebaseFirestore.instance.loadBundle(buffer);
@@ -118,7 +118,7 @@ class FirestoreSnippets extends DocSnippet {
 
     // Use the cached named query
     final results = await FirebaseFirestore.instance.namedQueryGet(
-      "example-query",
+      "latest-stories-query",
       options: const GetOptions(
         source: Source.cache,
       ),
