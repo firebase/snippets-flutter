@@ -5,7 +5,8 @@ TARGET_PATH="packages/$PROJECT_NAME/"
 
 # The && are necessary for some reason when using the Android Emulator action
 pushd "$TARGET_PATH" || exit &&
-flutter pub cache clean &&
+flutter pub upgrade win32 &&
+flutter clean &&
 flutter channel stable &&
 flutter pub get &&
 dart format . &&
