@@ -842,32 +842,33 @@ class FirestoreSnippets extends DocSnippet {
 
   void filterQuery_or() {
     // [START firestore_query_filter_or]
-    var query = db.collection("cities")
-      .where(
-        Filter.or(
-          Filter("capital", isEqualTo: true),
-          Filter("population", isGreaterThan: 1000000)
-        ));
+    var query = db.collection("cities").where(
+          Filter.or(
+            Filter("capital", isEqualTo: true),
+            Filter("population", isGreaterThan: 1000000),
+          ),
+        );
     // [END firestore_query_filter_or]
   }
 
   void filterQuery_or2() {
     // [START firestore_query_filter_or_compound]
-    var query = db.collection("cities")
-      .where(
-        Filter.and(
-          Filter("state", isEqualTo: "CA"),
-        Filter.or(
-          Filter("capital", isEqualTo: true),
-          Filter("population", isGreaterThan: 1000000)
-        )));
+    var query = db.collection("cities").where(
+          Filter.and(
+            Filter("state", isEqualTo: "CA"),
+            Filter.or(
+              Filter("capital", isEqualTo: true),
+              Filter("population", isGreaterThan: 1000000),
+            ),
+          ),
+        );
     // [END firestore_query_filter_or_compound]
   }
 
   void aggregationQuery_count() {
     // [START count_aggregate_collection]
     // Returns number of documents in users collection
-    db.collection("users").count().get().then(
+    db.collection("cities").count().get().then(
           (res) => print(res.count),
           onError: (e) => print("Error completing: $e"),
         );
@@ -876,12 +877,79 @@ class FirestoreSnippets extends DocSnippet {
 
   void aggregationQuery_count2() {
     // [START count_aggregate_query]
-    // This also works with collectionGroup queries.
-    db.collection("users").where("age", isGreaterThan: 10).count().get().then(
+    // This also works with collection queries.
+    db.collection("cities").where("capital", isEqualTo: 10).count().get().then(
           (res) => print(res.count),
           onError: (e) => print("Error completing: $e"),
         );
     // [END count_aggregate_query]
+  }
+
+  void aggregationQuery_sum() {
+    // [START sum_aggregate_collection]
+    db.collection("cities").aggregate(sum("population")).get().then(
+          (res) => print(res.getAverage("population")),
+          onError: (e) => print("Error completing: $e"),
+        );
+    // [END sum_aggregate_collection]
+  }
+
+  void aggregationQuery_sum2() {
+    // [START sum_aggregate_query]
+    db
+        .collection("cities")
+        .where("capital", isEqualTo: true)
+        .aggregate(sum("population"))
+        .get()
+        .then(
+          (res) => print(res.getAverage("population")),
+          onError: (e) => print("Error completing: $e"),
+        );
+    // [END sum_aggregate_query]
+  }
+
+  void aggregationQuery_average() {
+    // [START average_aggregate_collection]
+    db.collection("cities").aggregate(average("population")).get().then(
+          (res) => print(res.getAverage("population")),
+          onError: (e) => print("Error completing: $e"),
+        );
+    // [END average_aggregate_collection]
+  }
+
+  void aggregationQuery_average2() {
+    // [START average_aggregate_query]
+    db
+        .collection("cities")
+        .where("capital", isEqualTo: true)
+        .aggregate(average("population"))
+        .get()
+        .then(
+          (res) => print(res.getAverage("population")),
+          onError: (e) => print("Error completing: $e"),
+        );
+    // [END average_aggregate_query]
+  }
+
+  void multipleAggregateQueries() {
+    // [START multiple_aggregate_queries]
+    db
+        .collection("cities")
+        .aggregate(
+          count(),
+          sum("population"),
+          average("population"),
+        )
+        .get()
+        .then(
+      (res) {
+        print(res.count);
+        print(res.getSum("population"));
+        print(res.getAverage("population"));
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    // [END multiple_aggregate_queries]
   }
 
   void orderAndLimitData_orderAndLimitData() {
@@ -970,7 +1038,8 @@ class FirestoreSnippets extends DocSnippet {
         final next = db
             .collection("cities")
             .orderBy("population")
-            .startAfterDocument(lastVisible).limit(25);
+            .startAfterDocument(lastVisible)
+            .limit(25);
 
         // Use the query for pagination
         // ...
