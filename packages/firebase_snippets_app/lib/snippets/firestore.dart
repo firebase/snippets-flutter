@@ -932,7 +932,7 @@ class FirestoreSnippets extends DocSnippet {
   }
 
   void multipleAggregateQueries() {
-    // [START multiple_aggregate_queries]
+    // [START multi_aggregate_query]
     db
         .collection("cities")
         .aggregate(
@@ -949,7 +949,7 @@ class FirestoreSnippets extends DocSnippet {
       },
       onError: (e) => print("Error completing: $e"),
     );
-    // [END multiple_aggregate_queries]
+    // [END multi_aggregate_query]
   }
 
   void orderAndLimitData_orderAndLimitData() {
