@@ -46,6 +46,7 @@ dependencies:
   firebase_crashlytics: ^3.3.0
   firebase_auth_platform_interface: ^7.3.0
   http: ^1.2.2
+  win32: ^5.5.4
 
 dev_dependencies:
   flutter_test:
