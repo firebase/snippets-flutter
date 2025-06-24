@@ -1069,12 +1069,8 @@ class FirestoreSnippets extends DocSnippet {
 
   void accessDataOffline_configure() async {
     // [START access_data_offline_configure_offline_persistence]
-    // Apple and Android
+    // Apple, Android and Web
     db.settings = const Settings(persistenceEnabled: true);
-
-    // Web
-    await db
-        .enablePersistence(const PersistenceSettings(synchronizeTabs: true));
     // [END access_data_offline_configure_offline_persistence]
   }
 
