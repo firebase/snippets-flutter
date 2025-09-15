@@ -888,7 +888,7 @@ class FirestoreSnippets extends DocSnippet {
   void aggregationQuery_sum() {
     // [START sum_aggregate_collection]
     db.collection("cities").aggregate(sum("population")).get().then(
-          (res) => print(res.getAverage("population")),
+          (res) => print(res.getSum("population")),
           onError: (e) => print("Error completing: $e"),
         );
     // [END sum_aggregate_collection]
@@ -902,7 +902,7 @@ class FirestoreSnippets extends DocSnippet {
         .aggregate(sum("population"))
         .get()
         .then(
-          (res) => print(res.getAverage("population")),
+          (res) => print(res.getSum("population")),
           onError: (e) => print("Error completing: $e"),
         );
     // [END sum_aggregate_query]
